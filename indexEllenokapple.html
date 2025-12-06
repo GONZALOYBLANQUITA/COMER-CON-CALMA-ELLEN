@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Comer con calma - Ellen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --color-fondo: #f8f5fb;
+      --color-principal: #7b6cff;
+      --color-secundario: #ffb6b9;
+      --color-acento: #6bc9b7;
+      --color-texto: #333333;
+      --color-tarjeta: #ffffff;
+      --sombra-suave: 0 4px 12px rgba(0,0,0,0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #ffe9f0 0, #f8f5fb 35%, #e9f7f4 100%);
+      color: var(--color-texto);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .app-container {
+      max-width: 480px;
+      width: 100%;
+      padding: 16px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      margin: 0;
+      color: #4a3bb4;
+    }
+
+    header p {
+      margin: 6px 0 0;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .card {
+      background: var(--color-tarjeta);
+      border-radius: var(--radius);
+      box-shadow: var(--sombra-suave);
+      padding: 18px 16px;
+      margin-bottom: 14px;
+    }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn {
+      display: inline-block;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 600;
+      margin: 4px 0;
+      width: 100%;
+      transition: transform 0.05s ease, box-shadow 0.1s ease, background 0.15s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--color-principal), #a18bff);
+      color: #ffffff;
+      box-shadow: 0 3px 8px rgba(123,108,255,0.4);
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--color-principal);
+      border: 1px solid #d7d3ff;
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #ff6b7f, #ff9fa8);
+      color: #ffffff;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: #555;
+      border: 1px dashed #ccc;
+    }
+
+    .btn-small {
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      width: auto;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .btn[disabled] {
+      opacity: 0.45;
+      cursor: default;
+      box-shadow: none;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 8px 0 4px;
+    }
+
+    .pill-option {
+      flex: 1 1 30%;
+      min-width: 70px;
+    }
+
+    .label {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-top: 4px;
+      margin-bottom: 4px;
+    }
+
+    .subtext {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 80px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      padding: 8px 10px;
+      font-size: 0.95rem;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      background: #f2efff;
+      color: #4a3bb4;
+      margin-right: 6px;
+      margin-bottom: 4px;
+    }
+
+    .nav-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+    }
+
+    .nav-top span {
+      opacity: 0.8;
+      font-weight: 500;
+    }
+
+    .chip-animo {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      background: #e6faf4;
+      color: #237562;
+      border: 1px solid #b6e3d6;
+    }
+
+    .logro-item {
+      border-radius: 14px;
+      border: 1px solid #eee;
+      padding: 10px 10px;
+      margin-bottom: 8px;
+      background: #fdfbff;
+    }
+
+    .logro-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .logro-badge {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .logro-badge-bueno {
+      background: #6bc9b7;
+    }
+
+    .logro-badge-medio {
+      background: #f7b733;
+    }
+
+    .logro-badge-dificil {
+      background: #ff6b7f;
+    }
+
+    .logro-body {
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+
+    .logro-nota {
+      font-size: 0.8rem;
+      margin-top: 4px;
+      opacity: 0.8;
+      font-style: italic;
+    }
+
+    .crisis-steps {
+      list-style: none;
+      padding-left: 0;
+      margin: 6px 0 0;
+      font-size: 0.9rem;
+    }
+
+    .crisis-steps li {
+      margin-bottom: 6px;
+      padding-left: 4px;
+    }
+
+    .highlight-box {
+      border-radius: 14px;
+      padding: 10px;
+      background: #fff7f8;
+      border: 1px solid #ffd1d8;
+      font-size: 0.9rem;
+      margin-top: 6px;
+    }
+
+    .slider-value {
+      font-size: 0.85rem;
+      text-align: right;
+      margin-top: -4px;
+      margin-bottom: 4px;
+      opacity: 0.8;
+    }
+
+    .footer-autor {
+      text-align: center;
+      font-size: 0.75rem;
+      opacity: 0.7;
+      margin-top: 6px;
+      margin-bottom: 2px;
+    }
+
+    /* === Guía interactiva === */
+    .guia-step {
+      display: none;
+      margin-top: 6px;
+    }
+
+    .guia-step.active {
+      display: block;
+    }
+
+    .guia-step-icon {
+      font-size: 1.6rem;
+      margin-bottom: 4px;
+    }
+
+    .guia-step-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 0.95rem;
+    }
+
+    .guia-step-text {
+      font-size: 0.9rem;
+    }
+
+    .guia-progress {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      margin-bottom: 8px;
+      font-size: 0.8rem;
+    }
+
+    .guia-progress-dots {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .guia-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #ddd;
+      opacity: 0.7;
+    }
+
+    .guia-dot.active {
+      background: #7b6cff;
+      opacity: 1;
+    }
+
+    .guia-nav-buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 480px) {
+      .app-container {
+        padding: 10px;
+      }
+      header h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header>
+      <h1>Comer con calma</h1>
+      <p>Ellen, esta app te acompaña paso a paso cuando comes. No estás sola. 💜</p>
+    </header>
+
+    <!-- INICIO -->
+    <section id="section-home" class="section active">
+      <div class="card">
+        <div class="nav-top">
+          <span>Inicio</span>
+          <span class="chip-animo">Hoy vale avanzar, aunque sea poquito ✨</span>
+        </div>
+        <p style="margin-top:8px; font-size:0.95rem;">
+          Vamos a hacerlo simple: un momento a la vez, un bocado a la vez.
+        </p>
+        <button class="btn btn-primary" onclick="empezarComida()">
+          Empezar una comida ahora
+        </button>
+        <button class="btn btn-secondary" onclick="showSection('section-logros')">
+          Ver mis logros
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="label">¿Te sientes bloqueada o muy asustada al comer?</div>
+        <p class="subtext">
+          Usa el módulo de crisis cuando la ansiedad sube mucho o sientas que no puedes tragar.
+        </p>
+        <button class="btn btn-danger" onclick="abrirCrisisDesdeInicio()">
+          🧠 Estoy en crisis (necesito ayuda ahora)
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="label">Guía paso a paso</div>
+        <p class="subtext">
+          Puedes leer esta guía antes o durante la comida. Verás un paso a la vez, para no abrumarte.
+        </p>
+        <button class="btn btn-secondary" onclick="abrirGuia()">
+          📖 Ver guía calmada para comer
+        </button>
+      </div>
+    </section>
+
+    <!-- ANTES DE COMER -->
+    <section id="section-pre" class="section">
+      <div class="card">
+        <div class="nav-top">
+          <span>Antes de comer</span>
+          <button class="btn btn-ghost btn-small" onclick="volverInicio()">
+            ⬅ Volver
+          </button>
+        </div>
+        <div class="label">1. ¿Cuánta ansiedad sientes ahora? (0 a 10)</div>
+        <input type="range" id="ansiedad-inicial" min="0" max="10" value="4" oninput="updateAnsiedadLabel('ansiedad-inicial','ansiedad-inicial-label')" />
+        <div id="ansiedad-inicial-label" class="slider-value">Ansiedad actual: 4 / 10</div>
+
+        <div class="label" style="margin-top:8px;">2. Checklist rápido</div>
+        <p class="subtext">
+          Puedes leerlo en voz alta si te ayuda.
+        </p>
+        <div class="highlight-box">
+          <ul style="padding-left:16px; margin:0;">
+            <li>✅ Estoy sentada cómoda.</li>
+            <li>✅ Puedo ir a mi ritmo; nadie me apura.</li>
+            <li>✅ No tengo que terminar todo el plato.</li>
+          </ul>
+        </div>
+
+        <div class="label" style="margin-top:10px;">3. Respiración 4 - 4 - 4</div>
+        <p class="subtext">
+          Inhala 4 segundos, sostén 4, exhala 4. Repite 3 veces.
+        </p>
+        <button class="btn btn-secondary" onclick="marcarRespiracion()">
+          🌬 Hice mi respiración 4-4-4
+        </button>
+
+        <button class="btn btn-primary" style="margin-top:12px;" onclick="irDurante()">
+          Ir a la comida
+        </button>
+      </div>
+    </section>
+
+    <!-- DURANTE LA COMIDA -->
+    <section id="section-during" class="section">
+      <div class="card">
+        <div class="nav-top">
+          <span>Durante la comida</span>
+          <button class="btn btn-ghost btn-small" onclick="volverInicioConfirm()">
+            ⬅ Salir
+          </button>
+        </div>
+
+        <div class="label">Un bocado a la vez</div>
+        <p style="font-size:0.95rem; margin-top:4px;">
+          Tu cuerpo ya sabe tragar, lo hace todos los días sin que te des cuenta.
+          Hoy solo lo estamos observando con más atención, no es algo nuevo.
+        </p>
+
+        <div class="highlight-box">
+          <div class="label" style="margin-top:0;">Pequeños recordatorios:</div>
+          <ul style="padding-left:16px; margin:4px 0 0; font-size:0.9rem;">
+            <li>No hay apuro. Nadie te está cronometrando.</li>
+            <li>Si un pensamiento te asusta, es solo un pensamiento, no un hecho.</li>
+            <li>Puedes hacer pequeñas pausas sin que eso signifique “fracasar”.</li>
+          </ul>
+        </div>
+
+        <button class="btn btn-danger" style="margin-top:12px;" onclick="abrirCrisisDesdeDurante()">
+          🧠 Me estoy bloqueando (usar ayuda de crisis)
+        </button>
+
+        <button class="btn btn-primary" style="margin-top:12px;" onclick="irDespues()">
+          Terminé de comer
+        </button>
+      </div>
+    </section>
+
+    <!-- DESPUÉS DE COMER -->
+    <section id="section-after" class="section">
+      <div class="card">
+        <div class="nav-top">
+          <span>Después de comer</span>
+          <button class="btn btn-ghost btn-small" onclick="volverInicio()">
+            ⬅ Inicio
+          </button>
+        </div>
+
+        <div class="label">1. ¿Cuánto sentiste que comiste?</div>
+        <div class="pill-row">
+          <button class="btn btn-secondary pill-option" onclick="setCantidad('poco', this)">Poco</button>
+          <button class="btn btn-secondary pill-option" onclick="setCantidad('suficiente', this)">Suficiente</button>
+          <button class="btn btn-secondary pill-option" onclick="setCantidad('bien-para-mi', this)">Bien para mí</button>
+        </div>
+        <p class="subtext">No hay respuesta correcta. Solo lo que tú percibiste.</p>
+
+        <div class="label" style="margin-top:10px;">2. Ansiedad al final (0 a 10)</div>
+        <input type="range" id="ansiedad-final" min="0" max="10" value="3" oninput="updateAnsiedadLabel('ansiedad-final','ansiedad-final-label')" />
+        <div id="ansiedad-final-label" class="slider-value">Ansiedad final: 3 / 10</div>
+
+        <div class="label" style="margin-top:10px;">3. ¿Qué aprendiste hoy sobre ti al comer?</div>
+        <textarea id="reflexion" placeholder="Por ejemplo: 'Aunque tuve miedo, pude seguir comiendo a mi ritmo.'"></textarea>
+
+        <button class="btn btn-primary" style="margin-top:12px;" onclick="guardarRegistro()">
+          💾 Guardar registro y volver a inicio
+        </button>
+      </div>
+    </section>
+
+    <!-- LOGROS -->
+    <section id="section-logros" class="section">
+      <div class="card">
+        <div class="nav-top">
+          <span>Mis logros</span>
+          <button class="btn btn-ghost btn-small" onclick="volverInicio()">
+            ⬅ Inicio
+          </button>
+        </div>
+        <p class="subtext">
+          Aquí aparecen tus comidas registradas. Cada intento cuenta, incluso los días difíciles.
+        </p>
+        <div id="logros-resumen" class="subtext" style="margin-top:6px; font-weight:500;"></div>
+      </div>
+
+      <div class="card">
+        <div id="logros-lista">
+          <!-- Registros se insertan aquí -->
+        </div>
+        <button class="btn btn-ghost" onclick="borrarRegistros()">
+          🧹 Borrar todos mis registros
+        </button>
+      </div>
+    </section>
+
+    <!-- GUÍA PASO A PASO INTERACTIVA -->
+    <section id="section-guia" class="section">
+      <div class="card">
+        <div class="nav-top">
+          <span>Guía paso a paso</span>
+          <button class="btn btn-ghost btn-small" onclick="volverInicio()">
+            ⬅ Inicio
+          </button>
+        </div>
+
+        <p class="subtext">
+          Esta guía te acompaña en el momento real de comer. Verás un paso a la vez. Puedes avanzar a tu ritmo.
+        </p>
+
+        <div class="guia-progress">
+          <span id="guia-step-counter">Paso 1 de 9</span>
+          <div class="guia-progress-dots">
+            <div class="guia-dot"></div>
+            <div class="guia-dot"></div>
+            <div class="guia-dot"></div>
+            <div class="guia-dot"></div>
+            <div class="guia-dot"></div>
+            <div class="guia-dot"></div>
+            <div class="guia-dot"></div>
+            <div class="guia-dot"></div>
+            <div class="guia-dot"></div>
+          </div>
+        </div>
+
+        <!-- Paso 1 -->
+        <div class="guia-step" data-step="1">
+          <div class="guia-step-icon">🌱</div>
+          <div class="guia-step-title">Introducción: entrenar cuerpo y mente</div>
+          <p class="guia-step-text">
+            Sé que a veces, antes de tragar, aparece un miedo que te hace anticipar lo peor.
+            Hoy empiezas a entrenar a tu cuerpo y a tu mente para sentirte más segura en ese acto natural de comer y tragar.
+          </p>
+        </div>
+
+        <!-- Paso 2 -->
+        <div class="guia-step" data-step="2">
+          <div class="guia-step-icon">⏸️</div>
+          <div class="guia-step-title">1. Antes de dar el primer bocado</div>
+          <p class="guia-step-text">
+            Me detengo un momento.<br/>
+            Respiro despacio: inhalo 3 segundos, exhalo 5 segundos.<br/>
+            Esto le recuerda a mi cuerpo que estoy a salvo.<br/>
+            Me digo: “Puedo comer con calma. Estoy segura”.
+          </p>
+        </div>
+
+        <!-- Paso 3 -->
+        <div class="guia-step" data-step="3">
+          <div class="guia-step-icon">🌬️</div>
+          <div class="guia-step-title">2. Cuando el miedo aparece antes de tragar</div>
+          <p class="guia-step-text">
+            Si siento que mi garganta se tensa o que mi mente piensa “¿podré tragar?”, no me apresuro.<br/>
+            Hago una respiración lenta.<br/>
+            Me digo: “Mi garganta sabe hacerlo. Comer es seguro”.<br/>
+            Con esa frase, mi cuerpo empieza a soltar la tensión anticipatoria.
+          </p>
+        </div>
+
+        <!-- Paso 4 -->
+        <div class="guia-step" data-step="4">
+          <div class="guia-step-icon">🥄</div>
+          <div class="guia-step-title">3. Elegir bocados pequeños</div>
+          <p class="guia-step-text">
+            Tomo un bocado pequeño.<br/>
+            No busco terminar rápido, solo crear seguridad.<br/>
+            Siento la textura, el sabor, la temperatura.<br/>
+            Permito que mi mente esté en el presente y no en el miedo.
+          </p>
+        </div>
+
+        <!-- Paso 5 -->
+        <div class="guia-step" data-step="5">
+          <div class="guia-step-icon">💧</div>
+          <div class="guia-step-title">4. Al momento de tragar</div>
+          <p class="guia-step-text">
+            Antes de tragar, respiro suavemente.<br/>
+            Relajo la mandíbula, dejo que los hombros caigan.<br/>
+            Cuando estoy lista, trago sin presionarme.<br/>
+            Me digo: “Lo estoy logrando”.<br/>
+            Mi cuerpo registra cada experiencia tranquila como un nuevo aprendizaje.
+          </p>
+        </div>
+
+        <!-- Paso 6 -->
+        <div class="guia-step" data-step="6">
+          <div class="guia-step-icon">🫁</div>
+          <div class="guia-step-title">5. Si aparece tensión en la garganta</div>
+          <p class="guia-step-text">
+            Puedo hacer una breve pausa, relajar el cuello y mover suavemente los hombros.<br/>
+            Repito en silencio: “Mi garganta está libre. Estoy comiendo con calma”.<br/>
+            No lucho contra la sensación; solo la dejo suavizarse.
+          </p>
+        </div>
+
+        <!-- Paso 7 -->
+        <div class="guia-step" data-step="7">
+          <div class="guia-step-icon">🎵</div>
+          <div class="guia-step-title">6. Mantener el ritmo</div>
+          <p class="guia-step-text">
+            Después de tragar, vuelvo a respirar.<br/>
+            Me felicito mentalmente: “Eso estuvo bien”.<br/>
+            El objetivo no es comer más ni más rápido: es comer con tranquilidad, un bocado a la vez.
+          </p>
+        </div>
+
+        <!-- Paso 8 -->
+        <div class="guia-step" data-step="8">
+          <div class="guia-step-icon">📈</div>
+          <div class="guia-step-title">7. Ejercicio de progreso</div>
+          <p class="guia-step-text">
+            Durante la comida, elijo tres momentos para practicar la calma:
+          </p>
+          <ul style="padding-left:20px; font-size:0.9rem; margin-top:4px;">
+            <li>Antes de un bocado.</li>
+            <li>Justo al tragar.</li>
+            <li>Después de tragar.</li>
+          </ul>
+          <p class="guia-step-text">
+            Con cada repetición, mi cerebro aprende que comer es seguro.
+          </p>
+        </div>
+
+        <!-- Paso 9 -->
+        <div class="guia-step" data-step="9">
+          <div class="guia-step-icon">💜</div>
+          <div class="guia-step-title">8. Cuando el miedo anticipatorio intente dirigirme</div>
+          <p class="guia-step-text">
+            No le doy la última palabra.<br/>
+            Me digo:
+          </p>
+          <p class="guia-step-text" style="font-style:italic; margin-left:8px;">
+            “Estoy presente. Estoy comiendo. Mi cuerpo sabe cómo hacerlo”.<br/>
+            “El miedo es pasajero. Yo sigo avanzando”.
+          </p>
+          <div class="guia-step-title" style="margin-top:8px;">9. Mensaje final</div>
+          <p class="guia-step-text">
+            Me trato con cariño.<br/>
+            Me recuerdo que mi cuerpo funciona, que el miedo anticipatorio es solo una reacción aprendida.<br/>
+            Cada comida es una oportunidad para enseñarle a mi mente que estoy a salvo y que puedo tragar con confianza.
+          </p>
+        </div>
+
+        <div class="guia-nav-buttons">
+          <button id="btn-guia-prev" class="btn btn-secondary" onclick="cambiarGuiaPaso(-1)">
+            ⬅ Paso anterior
+          </button>
+          <button id="btn-guia-next" class="btn btn-primary" onclick="cambiarGuiaPaso(1)">
+            Siguiente paso ➜
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CRISIS -->
+    <section id="section-crisis" class="section">
+      <div class="card">
+        <div class="nav-top">
+          <span>Módulo de crisis</span>
+          <button class="btn btn-ghost btn-small" onclick="volverDespuesDeCrisis()">
+            ⬅ Volver
+          </button>
+        </div>
+
+        <div class="label">Cuando sientas que no puedes tragar o que te vas a ahogar:</div>
+        <ul class="crisis-steps">
+          <li><strong>1. Pausa.</strong> Deja el cubierto en la mesa. No tienes que dar el siguiente bocado aún.</li>
+          <li><strong>2. Mira alrededor.</strong> Nombra en tu mente 3 cosas que ves. Esto ayuda a salir del miedo.</li>
+          <li><strong>3. Mano en el pecho.</strong> Siente tu respiración. Inhala lento por la nariz, exhala por la boca.</li>
+          <li><strong>4. Frase ancla:</strong> “Mi cuerpo sabe tragar. Esto es ansiedad, no peligro real.”</li>
+        </ul>
+
+        <div class="highlight-box">
+          Si la ansiedad sigue muy alta, <strong>puedes decidir parar</strong> sin juzgarte.
+          El objetivo no es comer perfecto, sino entrenar que tú puedes elegir y cuidarte.
+        </div>
+
+        <button class="btn btn-primary" style="margin-top:12px;" onclick="marcarCrisisUsada()">
+          💜 Listo, quiero volver a seguir con la comida
+        </button>
+      </div>
+    </section>
+
+    <div class="footer-autor">
+      Desarrollado por: Lic. Gonzalo Buendía - Psicólogo.
+    </div>
+  </div>
+
+  <script>
+    // Estado actual de la sesión
+    let sesionActual = null;
+    let ultimaSeccionAntesDeCrisis = "section-home";
+
+    // Estado de la guía interactiva
+    let guiaPasoActual = 1;
+
+    function showSection(id) {
+      const sections = document.querySelectorAll(".section");
+      sections.forEach(sec => sec.classList.remove("active"));
+      const target = document.getElementById(id);
+      if (target) {
+        target.classList.add("active");
+      }
+
+      if (id === "section-logros") {
+        cargarLogros();
+      }
+    }
+
+    function volverInicio() {
+      showSection("section-home");
+    }
+
+    function empezarComida() {
+      const ahora = new Date();
+      sesionActual = {
+        fechaISO: ahora.toISOString(),
+        ansiedadInicial: 4,
+        ansiedadFinal: null,
+        cantidad: null,
+        reflexion: "",
+        usoCrisis: false,
+        respiracion: false
+      };
+      // Reset controles
+      document.getElementById("ansiedad-inicial").value = 4;
+      updateAnsiedadLabel("ansiedad-inicial","ansiedad-inicial-label");
+      resetCantidadButtons();
+      document.getElementById("ansiedad-final").value = 3;
+      updateAnsiedadLabel("ansiedad-final","ansiedad-final-label");
+      document.getElementById("reflexion").value = "";
+
+      showSection("section-pre");
+    }
+
+    function irDurante() {
+      if (!sesionActual) {
+        empezarComida();
+      }
+      const val = parseInt(document.getElementById("ansiedad-inicial").value, 10);
+      sesionActual.ansiedadInicial = val;
+      showSection("section-during");
+    }
+
+    function irDespues() {
+      if (!sesionActual) {
+        empezarComida();
+      }
+      showSection("section-after");
+    }
+
+    function volverInicioConfirm() {
+      const salir = confirm("Si sales ahora, esta comida no se guardará. ¿Quieres salir igual?");
+      if (salir) {
+        sesionActual = null;
+        volverInicio();
+      }
+    }
+
+    function updateAnsiedadLabel(inputId, labelId) {
+      const val = document.getElementById(inputId).value;
+      const label = document.getElementById(labelId);
+      label.textContent = (inputId === "ansiedad-inicial"
+        ? "Ansiedad actual: " + val + " / 10"
+        : "Ansiedad final: " + val + " / 10");
+    }
+
+    function marcarRespiracion() {
+      if (sesionActual) {
+        sesionActual.respiracion = true;
+        alert("Muy bien. Tu cuerpo agradece estos segundos de calma. 💜");
+      }
+    }
+
+    function resetCantidadButtons() {
+      document.querySelectorAll(".pill-option").forEach(btn => {
+        btn.classList.remove("btn-primary");
+        btn.classList.add("btn-secondary");
+      });
+    }
+
+    function setCantidad(valor, btn) {
+      if (!sesionActual) return;
+      sesionActual.cantidad = valor;
+      resetCantidadButtons();
+      btn.classList.remove("btn-secondary");
+      btn.classList.add("btn-primary");
+    }
+
+    function guardarRegistro() {
+      if (!sesionActual) {
+        alert("No hay una comida en curso para guardar.");
+        return;
+      }
+      sesionActual.ansiedadFinal = parseInt(document.getElementById("ansiedad-final").value, 10);
+      sesionActual.reflexion = document.getElementById("reflexion").value.trim();
+
+      const registros = cargarRegistrosDesdeStorage();
+      registros.push(sesionActual);
+      localStorage.setItem("ellen_comidas", JSON.stringify(registros));
+
+      alert("Registro guardado. Cada intento suma, incluso cuando fue un día difícil. 💚");
+      sesionActual = null;
+      volverInicio();
+    }
+
+    function cargarRegistrosDesdeStorage() {
+      const data = localStorage.getItem("ellen_comidas");
+      if (!data) return [];
+      try {
+        const parsed = JSON.parse(data);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function formatearFecha(fechaISO) {
+      const d = new Date(fechaISO);
+      if (isNaN(d.getTime())) return "Fecha desconocida";
+      return d.toLocaleString("es-PE", {
+        weekday: "short",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    function clasificarRegistro(reg) {
+      if (reg.ansiedadFinal <= 3) return "bueno";
+      if (reg.ansiedadFinal <= 6) return "medio";
+      return "dificil";
+    }
+
+    function textoBadge(tipo) {
+      if (tipo === "bueno") return "Día tranquilo";
+      if (tipo === "medio") return "Día retador";
+      return "Día difícil, pero registrado";
+    }
+
+    function cargarLogros() {
+      const listaContainer = document.getElementById("logros-lista");
+      const resumen = document.getElementById("logros-resumen");
+      const registros = cargarRegistrosDesdeStorage().sort((a, b) => (
+        new Date(b.fechaISO) - new Date(a.fechaISO)
+      ));
+
+      if (registros.length === 0) {
+        resumen.textContent = "Aún no hay registros. Cada vez que completes una comida, guárdala aquí.";
+        listaContainer.innerHTML = "<p class='subtext'>Cuando registres tus comidas, aparecerán en este espacio.</p>";
+        return;
+      }
+
+      let buenos = 0, medios = 0, dificiles = 0;
+      registros.forEach(r => {
+        const tipo = clasificarRegistro(r);
+        if (tipo === "bueno") buenos++;
+        else if (tipo === "medio") medios++;
+        else dificiles++;
+      });
+
+      resumen.textContent =
+        `Llevas ${registros.length} comida(s) registrada(s): ${buenos} tranquila(s), ` +
+        `${medios} retadora(s) y ${dificiles} difícil(es).`;
+
+      listaContainer.innerHTML = "";
+
+      registros.forEach(reg => {
+        const tipo = clasificarRegistro(reg);
+        const item = document.createElement("div");
+        item.className = "logro-item";
+
+        const header = document.createElement("div");
+        header.className = "logro-header";
+
+        const fechaEl = document.createElement("div");
+        fechaEl.textContent = formatearFecha(reg.fechaISO);
+        header.appendChild(fechaEl);
+
+        const badge = document.createElement("div");
+        badge.className = "logro-badge " +
+          (tipo === "bueno" ? "logro-badge-bueno" :
+           tipo === "medio" ? "logro-badge-medio" :
+           "logro-badge-dificil");
+        badge.textContent = textoBadge(tipo);
+        header.appendChild(badge);
+
+        const body = document.createElement("div");
+        body.className = "logro-body";
+        body.innerHTML =
+          `<div><strong>Cantidad percibida:</strong> ${textoCantidad(reg.cantidad)}</div>` +
+          `<div><strong>Ansiedad inicio:</strong> ${reg.ansiedadInicial ?? "-"} / 10</div>` +
+          `<div><strong>Ansiedad final:</strong> ${reg.ansiedadFinal ?? "-"} / 10</div>` +
+          `<div><strong>Usó módulo de crisis:</strong> ${reg.usoCrisis ? "Sí" : "No"}</div>` +
+          `<div><strong>Respiración hecha:</strong> ${reg.respiracion ? "Sí" : "No"}</div>`;
+
+        const nota = document.createElement("div");
+        nota.className = "logro-nota";
+        nota.textContent = reg.reflexion
+          ? `Reflexión: “${reg.reflexion}”`
+          : "Sin reflexión escrita este día.";
+
+        item.appendChild(header);
+        item.appendChild(body);
+        item.appendChild(nota);
+
+        listaContainer.appendChild(item);
+      });
+    }
+
+    function textoCantidad(c) {
+      if (c === "poco") return "Poco";
+      if (c === "suficiente") return "Suficiente";
+      if (c === "bien-para-mi") return "Bien para mí";
+      return "No registrado";
+    }
+
+    function borrarRegistros() {
+      const seguro = confirm("¿Quieres borrar todos tus registros? Esta acción no se puede deshacer.");
+      if (!seguro) return;
+      localStorage.removeItem("ellen_comidas");
+      cargarLogros();
+    }
+
+    // MÓDULO DE CRISIS
+    function abrirCrisisDesdeInicio() {
+      ultimaSeccionAntesDeCrisis = "section-home";
+      showSection("section-crisis");
+    }
+
+    function abrirCrisisDesdeDurante() {
+      ultimaSeccionAntesDeCrisis = "section-during";
+      if (sesionActual) {
+        sesionActual.usoCrisis = true;
+      }
+      showSection("section-crisis");
+    }
+
+    function marcarCrisisUsada() {
+      if (sesionActual) {
+        sesionActual.usoCrisis = true;
+      }
+      alert("Muy bien. Haber pedido ayuda ya es un progreso. Vuelve a tu ritmo, sin exigirte de más. 💜");
+      showSection(ultimaSeccionAntesDeCrisis);
+    }
+
+    function volverDespuesDeCrisis() {
+      showSection(ultimaSeccionAntesDeCrisis);
+    }
+
+    // === Guía interactiva ===
+    function abrirGuia() {
+      showSection("section-guia");
+      iniciarGuia();
+    }
+
+    function iniciarGuia() {
+      guiaPasoActual = 1;
+      actualizarGuiaUI();
+    }
+
+    function cambiarGuiaPaso(delta) {
+      const steps = document.querySelectorAll(".guia-step");
+      const maxPaso = steps.length;
+      guiaPasoActual = guiaPasoActual + delta;
+      if (guiaPasoActual < 1) guiaPasoActual = 1;
+      if (guiaPasoActual > maxPaso) guiaPasoActual = maxPaso;
+      actualizarGuiaUI();
+    }
+
+    function actualizarGuiaUI() {
+      const steps = document.querySelectorAll(".guia-step");
+      const dots = document.querySelectorAll(".guia-dot");
+      const counter = document.getElementById("guia-step-counter");
+
+      steps.forEach((step, idx) => {
+        step.classList.toggle("active", idx + 1 === guiaPasoActual);
+      });
+
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle("active", idx + 1 === guiaPasoActual);
+      });
+
+      if (counter) {
+        counter.textContent = "Paso " + guiaPasoActual + " de " + steps.length;
+      }
+
+      const btnPrev = document.getElementById("btn-guia-prev");
+      const btnNext = document.getElementById("btn-guia-next");
+
+      if (btnPrev) btnPrev.disabled = guiaPasoActual === 1;
+      if (btnNext) btnNext.disabled = guiaPasoActual === steps.length;
+    }
+
+    // Inicializar
+    document.addEventListener("DOMContentLoaded", () => {
+      updateAnsiedadLabel("ansiedad-inicial", "ansiedad-inicial-label");
+      updateAnsiedadLabel("ansiedad-final", "ansiedad-final-label");
+      iniciarGuia();
+    });
+  </script>
+</body>
+</html>
